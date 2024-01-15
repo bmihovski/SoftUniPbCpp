@@ -28,8 +28,9 @@ INSTANTIATE_TEST_SUITE_P(
         PbTests,
         PbTest,
         ::testing::Values(
-                TestParam{"5 1400 F SF W W SF", "Final points: 8040\nAverage points: 1328\n40.00%\n"},
-                TestParam{"4 750 SF W SF W", "Final points: 6190\nAverage points: 1360\n50.00%\n"},
-                TestParam{"7 1200 SF F W F W SF W", "Final points: 11040\nAverage points: 1405\n42.86%\n"}
+                TestParam{"Nakov SoftUni Sofia Bulgaria SomeText Stop AfterStop Europe HelloWorld",
+                          "Nakov\nSoftUni\nSofia\nBulgaria\nSomeText\n"},
+                TestParam{"Sofia Berlin Moscow Athens Madrid London Paris Stop AfterStop",
+                          "Sofia\nBerlin\nMoscow\nAthens\nMadrid\nLondon\nParis\n"}
         )
 );
