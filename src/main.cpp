@@ -7,13 +7,15 @@
 #endif
 
 void process(std::istream &cin, std::ostream &cout) {
+    std::string username;
+    std::string password;
+    cin >> username >> password;
     while (true) {
-        std::string textToPrint;
-        cin >> textToPrint;
-        if (textToPrint == "Stop") {
+        std::string passwordToCheck;
+        cin >> passwordToCheck;
+        if (passwordToCheck == password) {
+            cout << "Welcome " << username << "!" << std::endl;
             break;
-        } else {
-            cout << textToPrint << std::endl;
         }
     }
 }

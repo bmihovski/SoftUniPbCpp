@@ -28,9 +28,9 @@ INSTANTIATE_TEST_SUITE_P(
         PbTests,
         PbTest,
         ::testing::Values(
-                TestParam{"Nakov SoftUni Sofia Bulgaria SomeText Stop AfterStop Europe HelloWorld",
-                          "Nakov\nSoftUni\nSofia\nBulgaria\nSomeText\n"},
-                TestParam{"Sofia Berlin Moscow Athens Madrid London Paris Stop AfterStop",
-                          "Sofia\nBerlin\nMoscow\nAthens\nMadrid\nLondon\nParis\n"}
+                TestParam{"Nakov 1234 pass 1324 1234",
+                          "Welcome Nakov!\n"},
+                TestParam{"Gosho secret secret",
+                          "Welcome Gosho!\n"}
         )
 );
