@@ -9,26 +9,25 @@
 
 int process(std::istream &cin, std::ostream &cout) {
     const int failedTaskThreshold = 4;
-    std::string maxFailuresStr;
-    std::getline(cin, maxFailuresStr);
-    int maxFailures = std::stoi(maxFailuresStr);
+    int maxFailures;
+    cin >> maxFailures;
     std::string taskName;
     int totalScore = 0;
     int numberOfProblems = 0;
     int numberOfFailedProblems = 0;
     std::string lastProblem;
     while (true) {
-        std::string taskScore;
+        int taskScore;
+        cin >> std::ws;
         std::getline(cin, taskName);
-        std::getline(cin, taskScore);
+        cin >> taskScore;
         if (taskName == "Enough") {
             break;
         }
-        int convertedTaskScore = std::stoi(taskScore);
         numberOfProblems++;
-        totalScore += convertedTaskScore;
+        totalScore += taskScore;
         lastProblem = taskName;
-        if (convertedTaskScore <= failedTaskThreshold) {
+        if (taskScore <= failedTaskThreshold) {
             numberOfFailedProblems++;
         }
         if (numberOfFailedProblems == maxFailures) {
