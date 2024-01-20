@@ -28,9 +28,12 @@ INSTANTIATE_TEST_SUITE_P(
         PbTests,
         PbTest,
         ::testing::Values(
-                TestParam{"Nakov 1234 pass 1324 1234",
-                          "Welcome Nakov!\n"},
-                TestParam{"Gosho secret secret",
-                          "Welcome Gosho!\n"}
+                TestParam{"Troy\nStronger Life\nStyle\nTroy\n",
+                          "You checked 2 books and found it.\n"},
+                TestParam{"The Spot\nHunger Games\nHarry Potter\nTorronto\nSpotify\nNo More Books\n",
+                          "The book you search is not here!\nYou checked 4 books.\n"},
+                TestParam{
+                        "Bourne\nTrue Story\nForever\nMore Space\nThe Girl\nSpaceship\nStrongest\nProfit\nTripple\nStella\nThe Matrix\nBourne\n",
+                        "You checked 10 books and found it.\n"}
         )
 );

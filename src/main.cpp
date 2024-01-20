@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iomanip>
 #include <string>
 
 #ifdef TESTING
@@ -7,14 +6,21 @@
 #endif
 
 void process(std::istream &cin, std::ostream &cout) {
-    std::string username;
-    std::string password;
-    cin >> username >> password;
+    std::string searchedBook;
+    std::getline(cin, searchedBook);
+    int booksCount = 0;
+    std::string nextBook;
     while (true) {
-        std::string passwordToCheck;
-        cin >> passwordToCheck;
-        if (passwordToCheck == password) {
-            cout << "Welcome " << username << "!" << std::endl;
+        std::getline(cin, nextBook);
+        if (nextBook == "No More Books") {
+            cout << "The book you search is not here!" << std::endl;
+            cout << "You checked " << booksCount << " books." << std::endl;
+            break;
+        } else if (searchedBook != nextBook) {
+            booksCount++;
+            continue;
+        } else {
+            cout << "You checked " << booksCount << " books and found it." << std::endl;
             break;
         }
     }
