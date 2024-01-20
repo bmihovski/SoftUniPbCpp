@@ -1,29 +1,46 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <limits>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-void process(std::istream &cin, std::ostream &cout) {
-    std::string searchedBook;
-    std::getline(cin, searchedBook);
-    int booksCount = 0;
-    std::string nextBook;
+int process(std::istream &cin, std::ostream &cout) {
+    const int failedTaskThreshold = 4;
+    std::string maxFailuresStr;
+    std::getline(cin, maxFailuresStr);
+    int maxFailures = std::stoi(maxFailuresStr);
+    std::string taskName;
+    int totalScore = 0;
+    int numberOfProblems = 0;
+    int numberOfFailedProblems = 0;
+    std::string lastProblem;
     while (true) {
-        std::getline(cin, nextBook);
-        if (nextBook == "No More Books") {
-            cout << "The book you search is not here!" << std::endl;
-            cout << "You checked " << booksCount << " books." << std::endl;
-            break;
-        } else if (searchedBook != nextBook) {
-            booksCount++;
-            continue;
-        } else {
-            cout << "You checked " << booksCount << " books and found it." << std::endl;
+        std::string taskScore;
+        std::getline(cin, taskName);
+        std::getline(cin, taskScore);
+        if (taskName == "Enough") {
             break;
         }
+        int convertedTaskScore = std::stoi(taskScore);
+        numberOfProblems++;
+        totalScore += convertedTaskScore;
+        lastProblem = taskName;
+        if (convertedTaskScore <= failedTaskThreshold) {
+            numberOfFailedProblems++;
+        }
+        if (numberOfFailedProblems == maxFailures) {
+            cout << "You need a break, " << maxFailures << " poor grades." << std::endl;
+            return 0;
+        }
     }
+    cout << std::fixed << std::setprecision(2) << "Average score: " << (1.0 * totalScore) / numberOfProblems
+         << std::endl;
+    cout << "Number of problems: " << numberOfProblems << std::endl;
+    cout << "Last problem: " << lastProblem << std::endl;
+    return 0;
 }
 
 int main(int argc, char **argv) {

@@ -28,12 +28,9 @@ INSTANTIATE_TEST_SUITE_P(
         PbTests,
         PbTest,
         ::testing::Values(
-                TestParam{"Troy\nStronger Life\nStyle\nTroy\n",
-                          "You checked 2 books and found it.\n"},
-                TestParam{"The Spot\nHunger Games\nHarry Potter\nTorronto\nSpotify\nNo More Books\n",
-                          "The book you search is not here!\nYou checked 4 books.\n"},
-                TestParam{
-                        "Bourne\nTrue Story\nForever\nMore Space\nThe Girl\nSpaceship\nStrongest\nProfit\nTripple\nStella\nThe Matrix\nBourne\n",
-                        "You checked 10 books and found it.\n"}
+                TestParam{"3\nMoney\n6\nStory\n4\nSpring Time\n5\nBus\n6\nEnough\n",
+                          "Average score: 5.25\nNumber of problems: 4\nLast problem: Bus\n"},
+                TestParam{"2\nIncome\n3\nGame Info\n6\nBest Player\n4\n",
+                          "You need a break, 2 poor grades.\n"}
         )
 );
