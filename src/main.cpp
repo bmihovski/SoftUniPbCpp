@@ -1,44 +1,29 @@
 #include <iostream>
-#include <string>
-#include <iomanip>
-#include <limits>
+#include <climits>
 
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
 int process(std::istream &cin, std::ostream &cout) {
-    const int failedTaskThreshold = 4;
-    int maxFailures;
-    cin >> maxFailures;
-    std::string taskName;
-    int totalScore = 0;
-    int numberOfProblems = 0;
-    int numberOfFailedProblems = 0;
-    std::string lastProblem;
-    while (true) {
-        int taskScore;
-        cin >> std::ws;
-        std::getline(cin, taskName);
-        cin >> taskScore;
-        if (taskName == "Enough") {
-            break;
+    std::string destination;
+    double ticketPrice = 0;
+    cin >> destination;
+    while (destination != "End") {
+        cin >> ticketPrice;
+        double collectedMoney = 0;
+        while (collectedMoney < ticketPrice) {
+            int earnedMoney;
+            if (!(cin >> earnedMoney)) {
+                break;
+            }
+            collectedMoney += earnedMoney;
         }
-        numberOfProblems++;
-        totalScore += taskScore;
-        lastProblem = taskName;
-        if (taskScore <= failedTaskThreshold) {
-            numberOfFailedProblems++;
+        if (collectedMoney >= ticketPrice) {
+            cout << "Going to " << destination << "!" << std::endl;
         }
-        if (numberOfFailedProblems == maxFailures) {
-            cout << "You need a break, " << maxFailures << " poor grades." << std::endl;
-            return 0;
-        }
+        cin >> destination;
     }
-    cout << std::fixed << std::setprecision(2) << "Average score: " << (1.0 * totalScore) / numberOfProblems
-         << std::endl;
-    cout << "Number of problems: " << numberOfProblems << std::endl;
-    cout << "Last problem: " << lastProblem << std::endl;
     return 0;
 }
 
