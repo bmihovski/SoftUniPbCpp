@@ -13,10 +13,8 @@ int process(std::istream &cin, std::ostream &cout) {
         cin >> ticketPrice;
         double collectedMoney = 0;
         while (collectedMoney < ticketPrice) {
-            int earnedMoney;
-            if (!(cin >> earnedMoney)) {
-                break;
-            }
+            double earnedMoney;
+            cin >> earnedMoney;
             collectedMoney += earnedMoney;
         }
         if (collectedMoney >= ticketPrice) {
