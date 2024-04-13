@@ -1,73 +1,99 @@
-#include <iostream>
-#include <climits>
-#include <iomanip>
-#include <cmath>
-#include <vector>
 #include <algorithm>
+#include <cctype>
+#include <cfloat>
+#include <climits>
+#include <cmath>
+#include <cstddef>
+#include <cstdlib>
+#include <iomanip>
+#include <ios>
+#include <iostream>
+#include <istream>
+#include <iterator>
 #include <list>
-#include <stack>
+#include <ostream>
 #include <queue>
-
+#include <sstream>
+#include <stack>
+#include <string>
+#include <vector>
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-const std::vector<std::string> singleDigits = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-const std::vector<std::string> tensNumber = {"ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty",
-                                             "ninety"};
-const std::vector<std::string> toNineteen = {"eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-                                             "seventeen",
-                                             "eighteen", "nineteen"};
+char compareStrings(const std::string &firstVectorElem,
+                    const std::string &secondVectorElem) {
+  char compareResult = ' ';
+  bool isFirstLongerThanSecond =
+      firstVectorElem.length() > secondVectorElem.length();
+  bool areElemsSizeEqual =
+      firstVectorElem.length() == secondVectorElem.length();
+  bool isFirstBiggerThanSecond = firstVectorElem > secondVectorElem;
+  bool areElemsEqual = firstVectorElem == secondVectorElem;
+  if (isFirstBiggerThanSecond && areElemsSizeEqual && !areElemsEqual) {
+    compareResult = '<';
+  } else if (!isFirstBiggerThanSecond && areElemsSizeEqual && !areElemsEqual) {
+    compareResult = '>';
+  } else if (areElemsEqual && areElemsSizeEqual) {
+    compareResult = '=';
+  } else if (isFirstLongerThanSecond && !areElemsSizeEqual) {
+    compareResult = '<';
+  } else {
+    compareResult = '>';
+  }
+  return compareResult;
+}
 
-char getSeparator() {
-    return ' ';
+std::vector<std::string> stringToVector(std::istream &cin) {
+  std::string userInput;
+  std::getline(cin >> std::ws, userInput);
+  std::istringstream iss(userInput);
+  std::vector<std::string> result;
+  std::string word;
+  while (iss >> word) {
+    result.push_back(word);
+  }
+
+  return result;
 }
 
 int process(std::istream &cin, std::ostream &cout) {
-    int number;
-    cin >> number;
-    if (number == 0) {
-        cout << "zero" << std::endl;
-        return 0;
-    }
-    int thousands = number / 1000 % 10;
-    int hundreds = number / 100 % 10;
-    int tens = number / 10 % 10;
-    int singles = number / 1 % 10;
-    if (thousands != 0) {
-        cout << singleDigits[thousands - 1];
-        cout << getSeparator();
-        cout << "thousand";
-        cout << getSeparator();
-    }
-    if (hundreds != 0) {
-        cout << singleDigits[hundreds - 1];
-        cout << getSeparator();
-        cout << "hundred";
-        cout << getSeparator();
-    }
-    if (tens == 1) {
-        cout << toNineteen[singles - 1];
-        return 0;
-    } else if (tens != 0) {
-        cout << tensNumber[tens - 1];
-        cout << getSeparator();
-    }
+  std::vector<std::string> firstVectorList = stringToVector(cin);
+  std::vector<std::string> secondVectorList = stringToVector(cin);
 
-    if (singles != 0) {
-        cout << singleDigits[singles - 1];
-    }
-    cout << std::endl;
+  auto itFirst = firstVectorList.cbegin();
+  auto itSecond = secondVectorList.cbegin();
+  while (itFirst != firstVectorList.cend() &&
+         itSecond != secondVectorList.cend()) {
+    cout << compareStrings(*itFirst, *itSecond);
+    ++itFirst;
+    ++itSecond;
+  }
 
-    return 0;
+  if (itFirst != firstVectorList.cend()) {
+    while (itFirst != firstVectorList.cend()) {
+      cout << '+';
+      ++itFirst;
+    }
+  }
+
+  if (itSecond != secondVectorList.cend()) {
+    while (itSecond != secondVectorList.cend()) {
+    }
+    cout << '-';
+    ++itSecond;
+  }
+  cout << std::endl;
+
+  return 0;
 }
 
 int main(int argc, char **argv) {
 #ifdef TESTING
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 #else
-    process(std::cin, std::cout);
-    return 0;
+  process(std::cin, std::cout);
+  return 0;
 #endif
 }
