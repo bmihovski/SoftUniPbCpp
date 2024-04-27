@@ -1,90 +1,47 @@
 #include <algorithm>
 #include <cctype>
-#include <cfloat>
-#include <climits>
-#include <cmath>
-#include <cstddef>
-#include <cstdlib>
 #include <iomanip>
-#include <ios>
 #include <iostream>
 #include <istream>
 #include <iterator>
 #include <list>
+#include <map>
 #include <ostream>
 #include <queue>
+#include <set>
 #include <sstream>
-#include <stack>
 #include <string>
+#include <unordered_map>
 #include <vector>
 #ifdef TESTING
 #include <gtest/gtest.h>
 #endif
 
-char compareStrings(const std::string &firstVectorElem,
-                    const std::string &secondVectorElem) {
-  char compareResult = ' ';
-  bool isFirstLongerThanSecond =
-      firstVectorElem.length() > secondVectorElem.length();
-  bool areElemsSizeEqual =
-      firstVectorElem.length() == secondVectorElem.length();
-  bool isFirstBiggerThanSecond = firstVectorElem > secondVectorElem;
-  bool areElemsEqual = firstVectorElem == secondVectorElem;
-  if (isFirstBiggerThanSecond && areElemsSizeEqual && !areElemsEqual) {
-    compareResult = '<';
-  } else if (!isFirstBiggerThanSecond && areElemsSizeEqual && !areElemsEqual) {
-    compareResult = '>';
-  } else if (areElemsEqual && areElemsSizeEqual) {
-    compareResult = '=';
-  } else if (isFirstLongerThanSecond && !areElemsSizeEqual) {
-    compareResult = '<';
-  } else {
-    compareResult = '>';
-  }
-  return compareResult;
-}
-
-std::vector<std::string> stringToVector(std::istream &cin) {
-  std::string userInput;
-  std::getline(cin >> std::ws, userInput);
-  std::istringstream iss(userInput);
-  std::vector<std::string> result;
-  std::string word;
-  while (iss >> word) {
-    result.push_back(word);
-  }
-
-  return result;
-}
-
 int process(std::istream &cin, std::ostream &cout) {
-  std::vector<std::string> firstVectorList = stringToVector(cin);
-  std::vector<std::string> secondVectorList = stringToVector(cin);
-
-  auto itFirst = firstVectorList.cbegin();
-  auto itSecond = secondVectorList.cbegin();
-  while (itFirst != firstVectorList.cend() &&
-         itSecond != secondVectorList.cend()) {
-    cout << compareStrings(*itFirst, *itSecond);
-    ++itFirst;
-    ++itSecond;
-  }
-
-  if (itFirst != firstVectorList.cend()) {
-    while (itFirst != firstVectorList.cend()) {
-      cout << '+';
-      ++itFirst;
+  int rowsNums;
+  int colsNums;
+  cin >> rowsNums >> colsNums;
+  int **matrix = new int *[rowsNums];
+  for (int start = 0; start < rowsNums; ++start) {
+    matrix[start] = new int[colsNums];
+    std::string line;
+    std::getline(cin >> std::ws, line);
+    std::istringstream ss(line);
+    for (int innerStart = 0; innerStart < colsNums; ++innerStart) {
+      ss >> matrix[start][innerStart];
     }
   }
-
-  if (itSecond != secondVectorList.cend()) {
-    while (itSecond != secondVectorList.cend()) {
+  for (int i = 0; i < colsNums; ++i) {
+    int colSum = 0;
+    for (int j = 0; j < rowsNums; ++j) {
+      colSum += matrix[j][i];
     }
-    cout << '-';
-    ++itSecond;
+    cout << colSum << std::endl;
   }
-  cout << std::endl;
-
+  for (int i = 0; i < rowsNums; ++i) {
+    delete[] matrix[i];
+  }
+  delete[] matrix;
   return 0;
 }
 
