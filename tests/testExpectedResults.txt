@@ -1,19 +1,10 @@
-zero
+12
+10
+19
+20
+8
+7
 ===
-one hundred one
-===
-nine hundred fifty seven
-===
-one thousand nine hundred fifty seven
-===
-one thousand one
-===
-seventy five
-===
-fifty
-===
-eleven
-===
-one hundred
-===
-forty five
+12
+15
+18
