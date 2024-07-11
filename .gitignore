@@ -3,3 +3,4 @@
 /main
 .cache/clangd/index
 out/Debug
+compile_commands.json
