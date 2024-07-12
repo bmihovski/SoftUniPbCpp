@@ -1,0 +1,7 @@
+Volkswagen
+Golf
+2015
+---
+Brand -> Volkswagen
+Model -> Golf
+Year -> 2015

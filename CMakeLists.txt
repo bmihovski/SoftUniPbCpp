@@ -7,4 +7,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories(src)
 
-add_executable(PB src/Skeleton/CarMain.cpp src/Skeleton/Car.h)
+file(GLOB_RECURSE SOURCES "src/Skeleton/*.cpp" "src/Skeleton/*.h")
+
+add_executable(PB ${SOURCES})
