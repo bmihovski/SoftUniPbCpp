@@ -1,20 +1,23 @@
 #!/bin/bash
-num_tests=$1
 cd out/Debug || exit
 cmake .
 make
 cd ../../
-for i in $(seq 1 "$num_tests"); do
-  echo "Running test $i..."
-  # Split the file content based on the separator line
-  csplit -f "tests/temp." tests/Test."$i".txt '/---/'1 '{*}' >/dev/null
-  ./out/Debug/PB <tests/temp.00 >tests/temp.out.txt
-  if diff -q tests/temp.out.txt tests/temp.01 >/dev/null; then
-    echo "Test $i passed!"
+awk '/===/{n++;next}{print >"tests/Test.in.split."n}' tests/Test.in.txt
+awk '/===/{n++;next}{print >"tests/Test.out.split."n}' tests/Test.out.txt
+INPUTS=(tests/Test.in.split.*)
+OUTPUTS=(tests/Test.out.split.*)
+for i in "${!INPUTS[@]}"; do
+  echo "Running test $((i + 1))..."
+  ./out/Debug/PB <"${INPUTS[i]}" >tests/temp.out.txt
+  if diff -Z -B -q tests/temp.out.txt "${OUTPUTS[i]}" >/dev/null; then
+    echo "Test $((i + 1)) passed!"
   else
-    echo "Test $i failed!"
+    echo "Test $((i + 1)) failed!"
     echo "Input was:"
-    cat tests/temp.00
+    cat "${INPUTS[i]}"
+    echo "Output diff:"
+    diff -Z -B tests/temp.out.txt "${OUTPUTS[i]}"
   fi
-  rm tests/temp.00 tests/temp.01 tests/temp.out.txt
 done
+rm tests/temp.out.txt tests/Test.in.split.* tests/Test.out.split.*
