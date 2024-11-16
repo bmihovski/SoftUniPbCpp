@@ -1,7 +1,3 @@
-Brand -> Volkswagen
-Model -> Golf
-Year -> 2015
+48
 ===
-Brand -> Volkswagen
-Model -> Golf
-Year -> 2016
+29
