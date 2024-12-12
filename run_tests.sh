@@ -1,15 +1,14 @@
 #!/bin/bash
-cd out/Debug || exit
-cmake .
-make
-cd ../../
+
+bazel build //:main
+
 awk '/===/{n++;next}{print >"tests/Test.in.split."n}' tests/Test.in.txt
 awk '/===/{n++;next}{print >"tests/Test.out.split."n}' tests/Test.out.txt
 INPUTS=(tests/Test.in.split.*)
 OUTPUTS=(tests/Test.out.split.*)
 for i in "${!INPUTS[@]}"; do
   echo "Running test $((i + 1))..."
-  ./out/Debug/PB <"${INPUTS[i]}" >tests/temp.out.txt
+  ./bazel-bin/main <"${INPUTS[i]}" >tests/temp.out.txt
   if diff -Z -B -q tests/temp.out.txt "${OUTPUTS[i]}" >/dev/null; then
     echo "Test $((i + 1)) passed!"
   else
