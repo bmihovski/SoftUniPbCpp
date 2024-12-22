@@ -15,7 +15,7 @@ private:
     void              setDistance(const int distance);
 
 public:
-    ~BaseDestination() override;
+    virtual ~BaseDestination() = 0;
     BaseDestination(const std::string& name, int distance);
     std::vector<Car*>& getCars() override;
     std::string        getName() const override;

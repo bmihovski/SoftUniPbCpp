@@ -6,11 +6,11 @@
 class Car
 {
 public:
-    virtual ~Car() = default;
-    int         getBatteryCapacity() const;
-    std::string getModel() const;
-    int         getMileage() const;
-    void        drive();
+    virtual ~Car()                                 = default;
+    virtual int         getBatteryCapacity() const = 0;
+    virtual std::string getModel() const           = 0;
+    virtual int         getMileage() const         = 0;
+    virtual void        drive()                    = 0;
 };
 
 #endif // SRC_ENTITIES_CAR_CAR_H_

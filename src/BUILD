@@ -39,16 +39,20 @@ cc_library(
 )
 cc_library(
     name = "car",
-    # srcs = glob(["entities/car/*.cpp"]),
+    srcs = glob(["entities/car/*.cpp"]),
     hdrs = glob(["entities/car/*.h"]),
     visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "competition",
-    # srcs = glob(["entities/competition/*.cpp"]),
+    srcs = glob(["entities/competition/*.cpp"]),
     hdrs = glob(["entities/competition/*.h"]),
     visibility = ["//visibility:public"],
+    deps = [
+        "//src:destination",
+        "//src:car",
+    ],
 )
 
 cc_library(
@@ -63,9 +67,12 @@ cc_library(
 
 cc_library(
     name = "repositories",
-    # srcs = ["entities/repositories/*.cpp"],
+    srcs = glob(["entities/repositories/*.cpp"]),
     hdrs = glob(["entities/repositories/*.h"]),
     visibility = ["//visibility:public"],
+    deps = [
+        "//src:destination",
+    ],
 )
 
 exports_files(["main.cpp"])

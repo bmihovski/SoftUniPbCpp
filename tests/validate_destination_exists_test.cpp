@@ -42,7 +42,7 @@ TEST(ValidateDestinationExistsTest, ValidateTypesExist)
                                              "src/entities/car/Dacia.cpp",
                                              "src/entities/car/Dacia.h",
                                              "src/entities/repositories/DestinationRepository.h",
-                                             "src/entities/repositories/DestinationRepositoryImpl.h",
+                                             "src/entities/repositories/DestinationRepository.cpp",
                                              "src/entities/repositories/Repository.h"};
 
 
