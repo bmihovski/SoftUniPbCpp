@@ -1,5 +1,6 @@
 #!/bin/bash
 
+bazel run @hedron_compile_commands//:refresh_all
 bazel build //:main
 
 awk '/===/{n++;next}{print >"tests/Test.in.split."n}' tests/Test.in.txt

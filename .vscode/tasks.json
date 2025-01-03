@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build and Generate Compilation DB",
+      "type": "shell",
+      "command": "bazel run @hedron_compile_commands//:refresh_all && bazel build //... --config=gcc --compilation_mode=dbg"
+    },
+    {
+      "label": "Clean",
+      "type": "shell",
+      "command": "bazel clean"
+    }
+  ]
+}

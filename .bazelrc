@@ -1,0 +1,4 @@
+build:gcc --cxxopt='-std=c++23'
+build:gcc --cxxopt='-g'
+build:gcc --linkopt='-g'
+build:gcc --features=treat_warnings_as_errors
