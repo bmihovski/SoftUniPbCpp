@@ -17,7 +17,7 @@ TEST(ValidateDestinationExistsTest, ValidateTypesExist)
     using bazel::tools::cpp::runfiles::Runfiles;
     std::string               error;
     std::unique_ptr<Runfiles> runfiles(Runfiles::CreateForTest(&error));
-    ASSERT_TRUE(runfiles != nullptr) << error;
+    ASSERT_TRUE(runfiles != nullptr) << "Error creating runfiles" << error;
     std::vector<std::string> const files_to_check = {"src/entities/destination/Destination.h",
                                                      "src/entities/destination/BaseDestination.h",
                                                      "src/entities/destination/BaseDestination.cpp",

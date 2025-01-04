@@ -1,6 +1,6 @@
 exports_files(glob(["*.cpp"]), visibility = ["//visibility:public"])
 cc_test(
-   name = "validate_car_competition_test",
+   name = "all_tests",
    srcs = glob(["*.cpp"]),
    deps = [
         "@bazel_tools//tools/cpp/runfiles:runfiles",

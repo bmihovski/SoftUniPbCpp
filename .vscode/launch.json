@@ -22,6 +22,28 @@
         }
       ],
       "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "type": "cppdbg",
+      "request": "launch",
+      "name": "Debug Test",
+      "preLaunchTask": "Build Test",
+      "postDebugTask": "Clean",
+      "program": "${workspaceFolder}/bazel-out/k8-dbg/bin/tests/all_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "miDebuggerPath": "/usr/bin/gdb"
     }
   ]
 }

@@ -10,6 +10,26 @@
       "label": "Clean",
       "type": "shell",
       "command": "bazel clean"
+    },
+    {
+      "label": "Build Test",
+      "type": "shell",
+      "command": "bazel run @hedron_compile_commands//:refresh_all && bazel build //tests/... --config=gcc --compilation_mode=dbg",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Generated task to build a specific test using Bazel"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "testTarget",
+      "type": "promptString",
+      "description": "Enter the Bazel test target (e.g., tests:validate_destination_repository_test)"
     }
   ]
 }
