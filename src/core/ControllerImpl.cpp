@@ -1,22 +1,22 @@
 #include "ControllerImpl.h"
 #include <string>
 
-std::string ControllerImpl::addDestination(const std::string& name, int distance) const
+std::string ControllerImpl::AddDestination(const std::string& name, int distance) const
 {
     return "";
 }
 
-std::string ControllerImpl::addCar(const std::string& model, int batteryCapacity, int mileage) const
+std::string ControllerImpl::AddCar(const std::string& model, int batteryCapacity, int mileage) const
 {
     return "";
 }
 
-std::string ControllerImpl::reachDestination(const std::string& destinationName) const
+std::string ControllerImpl::ReachDestination(const std::string& destinationName) const
 {
     return "";
 }
 
-std::string ControllerImpl::getStatistics() const
+std::string ControllerImpl::GetStatistics() const
 {
     return "";
 }

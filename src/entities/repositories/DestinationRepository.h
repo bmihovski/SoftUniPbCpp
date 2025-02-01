@@ -13,14 +13,14 @@ using DestinationRepoBase = Repository<Destination>;
 class DestinationRepository : public DestinationRepoBase
 {
 private:
-    std::vector<std::unique_ptr<Destination>> destinations;
+    std::vector<std::unique_ptr<Destination>> destinations_;
 
 public:
     DestinationRepository();
     ~DestinationRepository();
-    void                        add(std::unique_ptr<Destination> destination) override;
-    std::vector<Destination*>   getCollection() const override;
-    bool                        remove(const Destination& destination) override;
-    std::optional<Destination*> byName(const std::string& name) const override;
+    void                        Add(std::unique_ptr<Destination> destination) override;
+    std::vector<Destination*>   GetCollection() const override;
+    bool                        Remove(const Destination& destination) override;
+    std::optional<Destination*> ByName(const std::string& name) const override;
 };
 #endif // SRC_ENTITIES_REPOSITORIES_DESTINATIONREPOSITORY_H_

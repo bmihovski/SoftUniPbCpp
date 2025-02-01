@@ -7,17 +7,17 @@
 
 Engine::Engine(Controller* controller)
 {
-    this->controller = const_cast<Controller*>(controller);
+    this->controller_ = const_cast<Controller*>(controller);
 }
 
-void Engine::run()
+void Engine::Run()
 {
     while (true)
     {
         std::string result;
         try
         {
-            result = processInput();
+            result = ProcessInput();
             if (result == "Exit")
             {
                 break;
@@ -31,7 +31,7 @@ void Engine::run()
     }
 }
 
-std::string Engine::processInput() const
+std::string Engine::ProcessInput() const
 {
     std::string              input;
     std::string              result;
@@ -48,16 +48,16 @@ std::string Engine::processInput() const
     switch (command)
     {
     case Command::AddDestination:
-        result = addDestination(data);
+        result = AddDestination(data);
         break;
     case Command::AddCar:
-        result = addCar(data);
+        result = AddCar(data);
         break;
     case Command::ReachDestination:
-        result = reachDestination(data);
+        result = ReachDestination(data);
         break;
     case Command::GetStatistics:
-        result = getStatistics();
+        result = GetStatistics();
         break;
     case Command::Exit:
         result = "Exit";
@@ -67,22 +67,22 @@ std::string Engine::processInput() const
     return result;
 }
 
-std::string Engine::addCar(std::vector<std::string>& data) const
+std::string Engine::AddCar(std::vector<std::string>& data) const
 {
     return "";
 }
 
-std::string Engine::addDestination(std::vector<std::string>& data) const
+std::string Engine::AddDestination(std::vector<std::string>& data) const
 {
     return "";
 }
 
-std::string Engine::reachDestination(std::vector<std::string>& data) const
+std::string Engine::ReachDestination(std::vector<std::string>& data) const
 {
     return "";
 }
 
-std::string Engine::getStatistics() const
+std::string Engine::GetStatistics() const
 {
     return "";
 }

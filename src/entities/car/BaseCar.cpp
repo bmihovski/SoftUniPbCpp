@@ -2,55 +2,55 @@
 #include <string>
 #include <stdexcept>
 
-BaseCar::BaseCar(const std::string& model, const int batteryCapacity) : batteryCapacity(batteryCapacity), mileage(0)
+BaseCar::BaseCar(const std::string& model, const int battery_capacity) : batteryCapacity_(battery_capacity), mileage_(0)
 {
-    setModel(model);
+    SetModel(model);
 }
 
 BaseCar::~BaseCar() = default;
 
-std::string BaseCar::getModel() const
+std::string BaseCar::GetModel() const
 {
-    return model;
+    return model_;
 }
 
-int BaseCar::getMileage() const
+int BaseCar::GetMileage() const
 {
-    return mileage;
+    return mileage_;
 }
-void BaseCar::setModel(const std::string& carModel)
+void BaseCar::SetModel(const std::string& car_model)
 {
-    if (carModel.empty() || carModel == " ")
+    if (car_model.empty() || car_model == " ")
     {
         throw std::invalid_argument("Car model cannot be null or empty.");
     }
-    this->model = carModel;
+    this->model_ = car_model;
 }
 
-void BaseCar::setMileage(const int mileage)
+void BaseCar::SetMileage(const int mileage)
 {
-    this->mileage = mileage;
+    this->mileage_ = mileage;
 }
 
-void BaseCar::setBatteryCapacity(const int batteryCapacity)
+void BaseCar::SetBatteryCapacity(const int battery_capacity)
 {
-    this->batteryCapacity = batteryCapacity;
+    this->batteryCapacity_ = battery_capacity;
 }
-int BaseCar::getBatteryCapacity() const
+int BaseCar::GetBatteryCapacity() const
 {
-    return batteryCapacity;
+    return batteryCapacity_;
 }
 
-void BaseCar::drive()
+void BaseCar::Drive()
 {
-    int newBatteryCapacity = getBatteryCapacity() - 15;
-    if (newBatteryCapacity <= 0)
+    int const new_battery_capacity = GetBatteryCapacity() - 15;
+    if (new_battery_capacity <= 0)
     {
-        setBatteryCapacity(0);
+        SetBatteryCapacity(0);
     }
     else
     {
-        setBatteryCapacity(newBatteryCapacity);
-        setMileage(getMileage() + 25);
+        SetBatteryCapacity(new_battery_capacity);
+        SetMileage(GetMileage() + 25);
     }
 }

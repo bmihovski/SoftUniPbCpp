@@ -8,18 +8,18 @@
 class BaseDestination : public Destination
 {
 private:
-    std::string       name;
-    int               distance;
-    std::vector<Car*> cars;
-    void              setName(const std::string& name);
-    void              setDistance(const int distance);
+    std::string       name_;
+    int               distance_;
+    std::vector<Car*> cars_;
+    void              SetName(const std::string& name);
+    void              SetDistance(int distance);
 
 public:
-    virtual ~BaseDestination() = 0;
+    ~BaseDestination() override = 0;
     BaseDestination(const std::string& name, int distance);
-    std::vector<Car*>& getCars() override;
-    std::string        getName() const override;
-    int                getDistance() const override;
+    std::vector<Car*>& GetCars() override;
+    std::string        GetName() const override;
+    int                GetDistance() const override;
 };
 
 #endif // SRC_ENTITIES_DESTINATION_BASEDESTINATION_H_

@@ -6,7 +6,7 @@
 class Lake : public BaseDestination
 {
 private:
-    static const int lakeDistance = 25;
+    static const int kLakeDistance = 25;
 
 public:
     explicit Lake(const std::string& name);

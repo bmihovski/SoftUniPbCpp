@@ -10,9 +10,9 @@ class Destination
 
 public:
     virtual ~Destination()                         = default;
-    virtual std::vector<Car*>& getCars()           = 0;
-    virtual std::string        getName() const     = 0;
-    virtual int                getDistance() const = 0;
+    virtual std::vector<Car*>& GetCars()           = 0;
+    virtual std::string        GetName() const     = 0;
+    virtual int                GetDistance() const = 0;
 };
 
 #endif // SRC_ENTITIES_DESTINATION_DESTINATION_H_

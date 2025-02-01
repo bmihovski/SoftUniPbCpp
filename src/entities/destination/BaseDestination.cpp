@@ -3,47 +3,53 @@
 #include <string>
 #include <vector>
 
-BaseDestination::BaseDestination(const std::string& name, const int distance)
+BaseDestination::BaseDestination(const std::string& name, const int distance) : distance_(distance)
 {
-    setName(name);
-    setDistance(distance);
-    this->cars = std::vector<Car*>();
+    SetName(name);
+    SetDistance(distance);
+    this->cars_ = std::vector<Car*>();
 }
 
 BaseDestination::~BaseDestination()
 {
-    for (auto car : cars)
+    for (auto* car : cars_)
     {
         delete car;
     }
 }
 
-std::string BaseDestination::getName() const
+std::string BaseDestination::GetName() const
 {
-    return this->name;
+    return this->name_;
 }
 
-int BaseDestination::getDistance() const
+int BaseDestination::GetDistance() const
 {
-    return distance;
+    return distance_;
 }
 
 
-std::vector<Car*>& BaseDestination::getCars()
+std::vector<Car*>& BaseDestination::GetCars()
 {
-    return this->cars;
+    return this->cars_;
 }
 
-void BaseDestination::setName(const std::string& destination_name)
+void BaseDestination::SetName(const std::string& destination_name)
 {
-    if (destination_name.empty()) throw std::invalid_argument("Destination name cannot be null or empty.");
+    if (destination_name.empty())
+    {
+        throw std::invalid_argument("Destination name cannot be null or empty.");
+    }
 
-    this->name = destination_name;
+    this->name_ = destination_name;
 }
 
-void BaseDestination::setDistance(const int distance_to_reach)
+void BaseDestination::SetDistance(const int distance_to_reach)
 {
-    if (distance_to_reach < 0) throw std::invalid_argument("Distance cannot be a negative number!");
+    if (distance_to_reach < 0)
+    {
+        throw std::invalid_argument("Distance cannot be a negative number!");
+    }
 
-    this->distance = distance_to_reach;
+    this->distance_ = distance_to_reach;
 }

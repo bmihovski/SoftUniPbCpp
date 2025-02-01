@@ -8,17 +8,17 @@
 class Engine
 {
 private:
-    Controller* controller;
+    Controller* controller_;
 
-    std::string processInput() const;
-    std::string addCar(std::vector<std::string>& data) const;
-    std::string addDestination(std::vector<std::string>& data) const;
-    std::string reachDestination(std::vector<std::string>& data) const;
-    std::string getStatistics() const;
+    std::string ProcessInput() const;
+    std::string AddCar(std::vector<std::string>& data) const;
+    std::string AddDestination(std::vector<std::string>& data) const;
+    std::string ReachDestination(std::vector<std::string>& data) const;
+    std::string GetStatistics() const;
 
 public:
     explicit Engine(Controller* controller);
-    void run();
+    void Run();
 };
 
 #endif // SRC_CORE_ENGINE_H_

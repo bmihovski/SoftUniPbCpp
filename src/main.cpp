@@ -4,7 +4,7 @@
 int main(int argc, char* argv[])
 {
     ControllerImpl controller;
-    Engine         engine = Engine(&controller);
-    engine.run();
+    auto           engine = Engine(&controller);
+    engine.Run();
     return 0;
 }

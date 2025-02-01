@@ -6,7 +6,7 @@
 class SeaSide : public BaseDestination
 {
 private:
-    static const int seaSideDistance = 80;
+    static const int kSeaSideDistance = 80;
 
 public:
     explicit SeaSide(const std::string& name);

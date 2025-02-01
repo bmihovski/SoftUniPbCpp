@@ -6,7 +6,7 @@
 class Mountain : public BaseDestination
 {
 private:
-    static const int mountainDistance = 60;
+    static const int kMountainDistance = 60;
 
 public:
     explicit Mountain(const std::string& name);

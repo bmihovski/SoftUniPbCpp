@@ -9,45 +9,51 @@
 #include "src/entities/destination/Destination.h"
 
 
+using std::unique_ptr;
+
 DestinationRepository::DestinationRepository()  = default;
 DestinationRepository::~DestinationRepository() = default;
 
-void DestinationRepository::add(std::unique_ptr<Destination> destination)
+void DestinationRepository::Add(std::unique_ptr<Destination> destination)
 {
-    std::cout << "Adding destination: " << destination->getName() << std::endl;
-    auto duplicate_destination = std::find_if(this->destinations.begin(),
-                                              this->destinations.end(),
-                                              [&destination](std::unique_ptr<Destination>& dest)
-                                              { return dest->getName() == destination->getName(); });
-    if (duplicate_destination != this->destinations.end())
+    std::cout << "Adding destination: " << destination->GetName() << std::endl;
+    auto duplicate_destination = std::find_if(this->destinations_.begin(),
+                                              this->destinations_.end(),
+                                              [&destination](const std::unique_ptr<Destination>& dest)
+                                              { return dest->GetName() == destination->GetName(); });
+    if (duplicate_destination != this->destinations_.end())
     {
         std::cout << "Destination already exists." << std::endl;
         return;
     }
-    this->destinations.push_back(std::move(destination));
+    this->destinations_.push_back(std::move(destination));
 }
 
-bool DestinationRepository::remove(const Destination& destination)
+bool DestinationRepository::Remove(const Destination& destination)
 {
-    auto found_it = std::remove_if(destinations.begin(),
-                                   destinations.end(),
-                                   [&destination](std::unique_ptr<Destination>& dest)
-                                   { return dest->getName() == destination.getName(); });
-    if (found_it != destinations.end())
+    if (destinations_.empty())
     {
-        destinations.erase(found_it, this->destinations.end());
+        return false;
+    }
+    auto found_it = std::remove_if(destinations_.begin(),
+                                   destinations_.end(),
+                                   [&destination](unique_ptr<Destination> const& dest)
+                                   { return dest->GetName() == destination.GetName(); });
+    if (found_it != destinations_.end())
+    {
+        destinations_.erase(found_it, this->destinations_.end());
         return true;
     }
 
     return false;
 }
 
-std::optional<Destination*> DestinationRepository::byName(const std::string& name) const
+std::optional<Destination*> DestinationRepository::ByName(const std::string& name) const
 {
-    auto found_it = std::find_if(this->destinations.begin(),
-                                 this->destinations.end(),
-                                 [&name](const std::unique_ptr<Destination>& dest) { return dest->getName() == name; });
-    if (found_it != this->destinations.end())
+    auto found_it = std::find_if(this->destinations_.begin(),
+                                 this->destinations_.end(),
+                                 [&name](const std::unique_ptr<Destination>& dest) { return dest->GetName() == name; });
+    if (found_it != this->destinations_.end())
     {
         return found_it->get();
     }
@@ -55,11 +61,11 @@ std::optional<Destination*> DestinationRepository::byName(const std::string& nam
     return std::nullopt;
 }
 
-std::vector<Destination*> DestinationRepository::getCollection() const
+std::vector<Destination*> DestinationRepository::GetCollection() const
 {
     std::vector<Destination*> raw_destinations;
-    raw_destinations.reserve(this->destinations.size());
-    for (const auto& dest : this->destinations)
+    raw_destinations.reserve(this->destinations_.size());
+    for (const auto& dest : this->destinations_)
     {
         raw_destinations.push_back(dest.get());
     }

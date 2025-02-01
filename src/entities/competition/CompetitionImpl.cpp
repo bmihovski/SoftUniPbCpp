@@ -6,14 +6,14 @@ void CompetitionImpl::startVoyage(const Destination& destination, const std::vec
 {
     for (Car* car : cars)
     {
-        while (car->getMileage() < destination.getDistance())
+        while (car->GetMileage() < destination.GetDistance())
         {
-            if (car->getBatteryCapacity() < 15)
+            if (car->GetBatteryCapacity() < 15)
             {
                 break;
             }
-            car->drive();
-            if (car->getBatteryCapacity() <= 0)
+            car->Drive();
+            if (car->GetBatteryCapacity() <= 0)
             {
                 break;
             }
