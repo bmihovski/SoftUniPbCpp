@@ -1,7 +1,8 @@
-Brand -> Volkswagen
-Model -> Golf
-Year -> 2015
+i love programming.
+I LOVE PROGRAMMING.
 ===
-Brand -> Volkswagen
-Model -> Golf
-Year -> 2016
+let's go on a vacation!
+LET'S GO ON A VACATION!
+===
+just use pointers
+JUST USE POINTERS

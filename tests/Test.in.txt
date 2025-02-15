@@ -1,7 +1,5 @@
-Register Vik123 123456
-Login Vik123 123456
-NewWallet BGN Standard
-Deposit 123e4567-e89b-12d3-a456-426614174000 500.00
-MyWallets
-ChangeWalletStatus 123e4567-e89b-12d3-a456-426614174000 INACTIVE
-Exit
+I love Programming.
+===
+Let’s go on a Vacation!
+===
+Just Use POINTERS
