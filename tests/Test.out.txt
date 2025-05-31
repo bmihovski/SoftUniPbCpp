@@ -1,8 +1,23 @@
-i love programming.
-I LOVE PROGRAMMING.
+Total weight: 20 kg
+Congratulations, all packages were delivered successfully by the couriers today.
 ===
-let's go on a vacation!
-LET'S GO ON A VACATION!
+Total weight: 16 kg
+Unfortunately, there are no more available couriers to deliver the following packages: 13
 ===
-just use pointers
-JUST USE POINTERS
+Total weight: 14 kg
+Unfortunately, there are no more available couriers to deliver the following packages: 3, 7
+===
+Total weight: 0 kg
+Unfortunately, there are no more available couriers to deliver the following packages: 10, 20, 30
+===
+Total weight: 0 kg
+Couriers are still on duty: 15, 25, 35 but there are no more packages to deliver.
+===
+Total weight: 15 kg
+Congratulations, all packages were delivered successfully by the couriers today.
+===
+Total weight: 35 kg
+Couriers are still on duty: 1 but there are no more packages to deliver.
+===
+Total weight: 9 kg
+Unfortunately, there are no more available couriers to deliver the following packages: 2, 2, 2

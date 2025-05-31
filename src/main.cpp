@@ -1,60 +1,111 @@
-#include <cstddef>
-#include <cstdlib>
+
+#include <cstdio>
 #include <iostream>
-#include <memory>
-#include <sstream>
+
+#include <queue>
+#include <stack>
 #include <string>
+#include <sstream>
+#include <cmath>
 
-
-int main(int /*argc*/, char* /*argv*/[])
-
+int main()
 {
-    std::string line;
-    std::getline(std::cin, line);
-    char* buffer = static_cast<char*>(malloc(line.size() + 1));
+    std::string products;
+    std::string couriers;
+    int         total_products = 0;
+    std::getline(std::cin, products);
+    std::getline(std::cin, couriers);
 
-    if (buffer == nullptr)
+    std::stack<int>    products_stack;
+    std::queue<int>    couriers_queue;
+    std::istringstream pss(products);
+    std::istringstream css(couriers);
+    int                temp = 0;
+    while (pss >> temp)
     {
-        return 1;
-    }
-    char* p = buffer;
-
-    for (; p != buffer + line.size(); ++p)
-    {
-        *p = line[p - buffer];
-        std::cout << *p;
-    }
-    *p = '\0';
-
-    char* lower_case_letters = static_cast<char*>(malloc(line.size() + 1));
-    char* lc_p               = lower_case_letters + line.size() + 1;
-    for (; p != buffer; --p)
-    {
-        *lc_p = std::tolower(*p);
-        --lc_p;
+        products_stack.push(temp);
     }
 
-    char* upper_case_letters = static_cast<char*>(malloc(line.size() + 1));
-    char* uc_p               = upper_case_letters;
-    for (; p != buffer + line.size(); ++p)
+    while (css >> temp)
     {
-        *uc_p = std::toupper(*p);
-        ++uc_p;
+        couriers_queue.push(temp);
     }
-    *uc_p = '\0';
-    std::cout << upper_case_letters;
 
-    for (size_t i = 0; i < line.size(); ++i)
+    while (!products_stack.empty() && !couriers_queue.empty())
     {
-        std::cout << lower_case_letters[i];
+        int       current_product = products_stack.top();
+        const int current_courier = couriers_queue.front();
+        if (current_courier > current_product)
+        {
+            int const new_courier_size = current_courier - std::pow(current_product, 2);
+            if (new_courier_size > 0)
+            {
+                couriers_queue.pop();
+                couriers_queue.push(new_courier_size);
+            }
+            total_products += current_product;
+            couriers_queue.pop();
+        }
+        else if (current_courier == current_product)
+        {
+            total_products += current_product;
+            couriers_queue.pop();
+            products_stack.pop();
+        }
+        else
+        {
+            current_product -= current_courier;
+            total_products += current_product;
+            products_stack.pop();
+            products_stack.push(current_product);
+            couriers_queue.pop();
+        }
     }
-    for (size_t i = 0; i < line.size(); ++i)
+
+    std::cout << "Total weight: " << total_products << " kg" << std::endl;
+    if (!products_stack.empty() && couriers_queue.empty())
     {
-        std::cout << upper_case_letters[i];
+        std::cout << "Unfortunately, there are no more available couriers to deliver the following packages : ";
+        bool first = true;
+        while (!products_stack.empty())
+        {
+            if (!first)
+            {
+                std::cout << ", ";
+            }
+            else
+            {
+                first = false;
+                std::cout << products_stack.top();
+            }
+            products_stack.pop();
+        }
+        std::cout << std::endl;
     }
-    free(buffer);
-    free(lower_case_letters);
-    free(upper_case_letters);
+    else if (!couriers_queue.empty() && products_stack.empty())
+    {
+        std::cout << "Couriers are still on duty: ";
+        bool first = true;
+        while (!couriers_queue.empty())
+        {
+            if (!first)
+            {
+                std::cout << ", ";
+            }
+            else
+            {
+                first = false;
+                std::cout << couriers_queue.front();
+            }
+            couriers_queue.pop();
+        }
+        std::cout << " but there are no more packages to deliver." << std::endl;
+    }
+    else
+    {
+        std::cout << "Congratulations, all packages were delivered successfully by the couriers today." << std::endl;
+    }
+
 
     return 0;
 }
