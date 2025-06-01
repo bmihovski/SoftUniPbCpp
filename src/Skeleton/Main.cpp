@@ -1,41 +1,28 @@
-#include <cstddef>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
 
 int main() {
-  int num_elems = 0;
-  int sum_odd = 0;
-  int sum_even = 0;
-  int sum_total = 0;
-  int average = 0;
-
-  std::cin >> num_elems;
+  int num_elem = 0;
+  std::cin >> num_elem;
   std::vector<int> elems;
-  elems.reserve(num_elems);
+  elems.reserve(num_elem);
   std::string input;
   std::getline(std::cin >> std::ws, input);
-  std::stringstream ss(input);
-  int val = 0;
-  while (ss >> val) {
-    sum_total += val;
-    elems.push_back(val);
+  std::stringstream iss(input);
+  int temp = 0;
+  while (iss >> temp) {
+    elems.push_back(temp);
   }
-  average = sum_total / num_elems;
 
-  for (size_t start = 0; start < num_elems; ++start) {
-    int cur_elem = elems[start];
-    if (cur_elem > average) {
-      continue;
+  while (elems.size() > 1) {
+    std::vector<int> condensed;
+    for (size_t i = 0; i < elems.size() - 1; ++i) {
+      condensed.push_back(elems[i] + elems[i + 1]);
     }
-    if (start % 2 == 0) {
-      sum_even += elems[start];
-    } else {
-      sum_odd += elems[start];
-    }
+    elems = condensed;
   }
-  std::cout << (sum_even * sum_odd) << std::endl;
-
+  std::cout << elems[0] << std::endl;
   return 0;
 }
