@@ -1,5 +1,9 @@
-12
+|wool| | |UA coal| |sea salt| |
+| |wool| |UA coal| |sea salt| |
+| |UA coal|wool| | |sea salt| |
+|UA coal|wool| | |sea salt| |
+| |UA coal|wool| | |sea salt|
 ===
-24
-===
-1
+|coal|ore| |livestock|grain|
+|coal| |ore|livestock|grain|
+|coal|ore|livestock|grain|

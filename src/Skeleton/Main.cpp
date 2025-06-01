@@ -1,41 +1,61 @@
-#include <cstddef>
 #include <iostream>
+#include <iterator>
 #include <sstream>
 #include <string>
 #include <vector>
 
+void PrintTrain(const std::vector<std::string>& train) {
+  std::cout << "|";
+  for (const auto& vagon : train) {
+    std::cout << vagon << "|";
+  }
+  std::cout << std::endl;
+}
+
 int main() {
-  int num_elems = 0;
-  int sum_odd = 0;
-  int sum_even = 0;
-  int sum_total = 0;
-  int average = 0;
-
-  std::cin >> num_elems;
-  std::vector<int> elems;
-  elems.reserve(num_elems);
   std::string input;
-  std::getline(std::cin >> std::ws, input);
-  std::stringstream ss(input);
-  int val = 0;
-  while (ss >> val) {
-    sum_total += val;
-    elems.push_back(val);
-  }
-  average = sum_total / num_elems;
-
-  for (size_t start = 0; start < num_elems; ++start) {
-    int cur_elem = elems[start];
-    if (cur_elem > average) {
-      continue;
-    }
-    if (start % 2 == 0) {
-      sum_even += elems[start];
+  std::vector<std::string> train_start;
+  while (std::getline(std::cin >> std::ws, input) && input != "end") {
+    if (input == "empty") {
+      train_start.push_back(" ");
     } else {
-      sum_odd += elems[start];
+      train_start.push_back(input);
     }
   }
-  std::cout << (sum_even * sum_odd) << std::endl;
+  if (train_start.empty()) {
+    return 0;
+  }
+  while (true) {
+    std::string command;
+    std::getline(std::cin >> std::ws, command);
+    std::stringstream ss(command);
+
+    std::string command_key;
+    ss >> command_key;
+    if (command_key == "E") {
+      break;
+    }
+    if (command_key == "P") {
+      PrintTrain(train_start);
+    } else if (command_key == "M") {
+      int from = 0;
+      int to = 0;
+      ss >> from >> to;
+      const int old_vagon_position = from - 1;
+      ss >> command_key;
+      const int new_vagon_position = to - 1;
+      const std::string vagon_name = train_start[old_vagon_position];
+      train_start.erase(train_start.begin() + old_vagon_position);
+      train_start.insert(train_start.begin() + new_vagon_position, vagon_name);
+      PrintTrain(train_start);
+    } else if (command_key == "L") {
+      int pos = 0;
+      ss >> pos;
+      const int position_to_remove = pos - 1;
+      train_start.erase(train_start.begin() + position_to_remove);
+      PrintTrain(train_start);
+    }
+  }
 
   return 0;
 }
