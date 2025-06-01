@@ -1,5 +1,8 @@
-12
+Money left to pay: 850.50 BGN.
+The championship was successful!
 ===
-24
+Money left to pay: 680.67 BGN.
+The championship was not successful.
 ===
-1
+Money left to pay: 1323.00 BGN.
+The championship was successful!
