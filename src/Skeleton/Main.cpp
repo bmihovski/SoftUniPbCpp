@@ -3,26 +3,27 @@
 #include <string>
 #include <vector>
 
-int main() {
-  int num_elem = 0;
-  std::cin >> num_elem;
-  std::vector<int> elems;
-  elems.reserve(num_elem);
-  std::string input;
-  std::getline(std::cin >> std::ws, input);
-  std::stringstream iss(input);
-  int temp = 0;
-  while (iss >> temp) {
-    elems.push_back(temp);
-  }
+bool IsVovel(const char symbol) {
+  return symbol == 'a' || symbol == 'e' || symbol == 'i' || symbol == 'o' ||
+         symbol == 'u';
+}
 
-  while (elems.size() > 1) {
-    std::vector<int> condensed;
-    for (size_t i = 0; i < elems.size() - 1; ++i) {
-      condensed.push_back(elems[i] + elems[i + 1]);
-    }
-    elems = condensed;
+int main() {
+  std::string line;
+  std::vector<char> symbols;
+  std::getline(std::cin, line);
+  auto it_line = line.begin();
+  while (it_line != line.end()) {
+    symbols.push_back(*it_line);
+    ++it_line;
   }
-  std::cout << elems[0] << std::endl;
+  auto it = symbols.begin();
+  while (it != symbols.end()) {
+    if (*it != *(it + 1) || IsVovel(*it)) {
+      std::cout << *it;
+    }
+    ++it;
+  }
+  std::cout << std::endl;
   return 0;
 }
