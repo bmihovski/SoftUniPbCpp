@@ -1,9 +1,6 @@
-|wool| | |UA coal| |sea salt| |
-| |wool| |UA coal| |sea salt| |
-| |UA coal|wool| | |sea salt| |
-|UA coal|wool| | |sea salt| |
-| |UA coal|wool| | |sea salt|
+1 symbol sentences: 1
 ===
-|coal|ore| |livestock|grain|
-|coal| |ore|livestock|grain|
-|coal|ore|livestock|grain|
+1 symbol sentences: 2
+3 symbol sentences: 1
+===
+3 symbol sentences: 2

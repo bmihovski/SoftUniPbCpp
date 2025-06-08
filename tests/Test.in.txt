@@ -1,25 +1,5 @@
-wool
-empty
-empty
-UA coal
-empty
-sea salt
-empty
-end
-P
-M 2 1
-M 4 2
-L 1
-M 6 1
-E
+This is a test!|
 ===
-coal
-ore
-empty
-livestock
-grain
-end
-P
-M 2 3
-L 2
-E
+Is this seriously the second exam?|This looks like a pice of cake!|Yum, yum, yum.|
+===
+Or is it???|What do you think?!?|
