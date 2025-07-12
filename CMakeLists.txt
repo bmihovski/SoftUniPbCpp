@@ -10,3 +10,7 @@ include_directories(src)
 file(GLOB_RECURSE SOURCES "src/*.c" "src/*.h")
 
 add_executable(PB ${SOURCES})
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLIB REQUIRED glib-2.0)
+include_directories(${GLIB_INCLUDE_DIRS})
+target_link_libraries(PB ${GLIB_LIBRARIES})
