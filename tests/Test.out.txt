@@ -1,5 +1,11 @@
-12
+Alice: 1
+Daryl: 4
+Stoyan: Not found!
+Bob: 2
+Fred: 1 2
 ===
-24
-===
-1
+Olivia: 1
+Ian: 4
+Mia: 1 3 4
+Koko: Not found!
+Liam: 2 3

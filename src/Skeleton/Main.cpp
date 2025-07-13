@@ -1,41 +1,35 @@
-#include <cstddef>
+#include <functional>
 #include <iostream>
+#include <map>
+#include <set>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 int main() {
-  int num_elems = 0;
-  int sum_odd = 0;
-  int sum_even = 0;
-  int sum_total = 0;
-  int average = 0;
-
-  std::cin >> num_elems;
-  std::vector<int> elems;
-  elems.reserve(num_elems);
-  std::string input;
-  std::getline(std::cin >> std::ws, input);
-  std::stringstream ss(input);
-  int val = 0;
-  while (ss >> val) {
-    sum_total += val;
-    elems.push_back(val);
+  std::string line;
+  std::unordered_map<std::string, std::set<int>> rooms_data;
+  while (std::getline(std::cin, line) && line != "END") {
+    std::stringstream ss(line);
+    std::string name;
+    int room_number = 0;
+    ss >> name >> room_number;
+    rooms_data[name].insert(room_number);
   }
-  average = sum_total / num_elems;
 
-  for (size_t start = 0; start < num_elems; ++start) {
-    int cur_elem = elems[start];
-    if (cur_elem > average) {
-      continue;
-    }
-    if (start % 2 == 0) {
-      sum_even += elems[start];
+  while (std::getline(std::cin, line) && line != "END") {
+    auto found_record_it = rooms_data.find(line);
+    if (found_record_it == rooms_data.end()) {
+      std::cout << line << ": Not found!";
     } else {
-      sum_odd += elems[start];
+      std::cout << line << ": ";
+      for (const auto& room_num : found_record_it->second) {
+        std::cout << room_num << " ";
+      }
     }
+    std::cout << std::endl;
   }
-  std::cout << (sum_even * sum_odd) << std::endl;
 
   return 0;
 }
