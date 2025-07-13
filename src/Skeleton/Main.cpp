@@ -7,28 +7,24 @@
 #include <unordered_map>
 #include <vector>
 
+double CalculatePrice(const double price, const int quantity) {
+  return price * quantity;
+}
+
 int main() {
+  size_t cities_count = 0;
   std::string line;
-  std::unordered_map<std::string, std::set<int>> rooms_data;
-  while (std::getline(std::cin, line) && line != "END") {
-    std::stringstream ss(line);
-    std::string name;
-    int room_number = 0;
-    ss >> name >> room_number;
-    rooms_data[name].insert(room_number);
+  std::cin >> cities_count;
+  std::map<std::string, double> city_prices;
+  while (std::getline(std::cin >> std::ws, line)) {
+    double price = 0;
+    int quantity = 0;
+    std::cin >> price >> quantity;
+    city_prices[line] += CalculatePrice(price, quantity);
   }
 
-  while (std::getline(std::cin, line) && line != "END") {
-    auto found_record_it = rooms_data.find(line);
-    if (found_record_it == rooms_data.end()) {
-      std::cout << line << ": Not found!";
-    } else {
-      std::cout << line << ": ";
-      for (const auto& room_num : found_record_it->second) {
-        std::cout << room_num << " ";
-      }
-    }
-    std::cout << std::endl;
+  for (const auto& [name, total] : city_prices) {
+    std::cout << name << " " << total << std::endl;
   }
 
   return 0;

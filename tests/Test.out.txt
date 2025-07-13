@@ -1,11 +1,6 @@
-Alice: 1
-Daryl: 4
-Stoyan: Not found!
-Bob: 2
-Fred: 1 2
+plovdiv 6
+sofia 5
 ===
-Olivia: 1
-Ian: 4
-Mia: 1 3 4
-Koko: Not found!
-Liam: 2 3
+Plovdiv 20
+Sofia 55
+Varna 6
