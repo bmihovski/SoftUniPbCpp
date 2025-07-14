@@ -4,3 +4,20 @@ sofia 5
 Plovdiv 20
 Sofia 55
 Varna 6
+===
+sofia 36
+plovdiv 29
+varna 12
+===
+burgas 65
+ruse 35
+===
+another 0
+test city 14
+===
+Plovdiv 20
+Sofia 55
+Varna 6
+===
+Sofia 43
+Varna 40
