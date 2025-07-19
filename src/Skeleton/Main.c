@@ -5,64 +5,65 @@
 #include <stdlib.h>
 #include <string.h>
 
-void FilterInvalidCompanies(char* comp_data) {
-  char* current_pos = comp_data;
+#define BOARD_SIZE 8
+#define MAX_SIZE 64
 
-  while (*current_pos != '\0') {
-    // Parse company ID
-    int comp_id = atoi(current_pos);
+bool IsWhitePiece(char piece) { return isupper(piece) && piece != '.'; }
 
-    if (comp_id == 0) {
-      break;
-    }
-
-    // Skip to the company name (after the number and any whitespace)
-    while (*current_pos != '\0' &&
-           (isdigit(*current_pos) || isspace(*current_pos))) {
-      current_pos++;
-    }
-
-    // Find the end of the company name (end of line)
-    char* line_end = strchr(current_pos, '\n');
-    if (line_end == NULL) {
-      // Last line might not have newline
-      line_end = current_pos + strlen(current_pos);
-    }
-
-    // Print valid companies (positive ID)
-    if (comp_id > 0) {
-      printf("%d ", comp_id);
-      // Print company name
-      while (current_pos < line_end) {
-        putchar(*current_pos);
-        current_pos++;
+bool IsBlackPiece(char piece) { return islower(piece) && piece != '.'; }
+void PrintFiguresByColor(const char board[BOARD_SIZE][BOARD_SIZE],
+                         bool (*predicate)(char), const char** no_elem_msg) {
+  bool has_match = false;
+  char current_sym = 0;
+  for (size_t row = 0; row < BOARD_SIZE; ++row) {
+    for (size_t col = 0; col < BOARD_SIZE; ++col) {
+      current_sym = board[row][col];
+      if (predicate(current_sym)) {
+        has_match = true;
+        printf("%c", current_sym);
       }
-      printf("\n");
-    } else {
-      // Skip this line for invalid companies
-      current_pos = line_end;
     }
+  }
+  printf("\n");
+  if (!has_match) {
+    printf("%s\n", *no_elem_msg);
+  }
+}
 
-    // Move to next line
-    if (*current_pos == '\n') {
-      current_pos++;
+const char* msg_no_white_fig = "<no white figures>";
+const char* msg_no_black_fig = "<no black figures>";
+void PrintAllFigures(const char board[BOARD_SIZE][BOARD_SIZE]) {
+  PrintFiguresByColor(board, IsWhitePiece, &msg_no_white_fig);
+  PrintFiguresByColor(board, IsBlackPiece, &msg_no_black_fig);
+}
+
+void ReverseAndPrint(char board[BOARD_SIZE][BOARD_SIZE]) {
+  char current_sym = 0;
+  for (size_t row = 0; row < BOARD_SIZE; ++row) {
+    for (size_t col = 0; col < BOARD_SIZE; ++col) {
+      current_sym = board[row][col];
+      if (IsWhitePiece(current_sym)) {
+        putchar(tolower(current_sym));
+      } else if (IsBlackPiece(current_sym)) {
+        putchar(toupper(current_sym));
+      } else {
+        putchar(current_sym);
+      }
     }
+    putchar('\n');
   }
 }
 
 int main() {
-  char buff[1000] = {0};
-  char line[256];
-
-  while (fgets(line, sizeof(line), stdin) != NULL) {
-    line[strcspn(line, "\n")] = '\0';
-    if (strcmp(line, "end") == 0) {
-      break;
+  char chess_board[BOARD_SIZE][BOARD_SIZE];
+  for (size_t row = 0; row < BOARD_SIZE; ++row) {
+    for (size_t col = 0; col < BOARD_SIZE; ++col) {
+      scanf(" %c", &chess_board[row][col]);
     }
-    strcat(buff, line);
-    strcat(buff, "\n");
+    getchar();
   }
 
-  FilterInvalidCompanies(buff);
+  PrintAllFigures(chess_board);
+  ReverseAndPrint(chess_board);
   return 0;
 }
