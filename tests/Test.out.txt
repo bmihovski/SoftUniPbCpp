@@ -1,11 +1,8 @@
-Alice: 1
-Daryl: 4
-Stoyan: Not found!
-Bob: 2
-Fred: 1 2
+Total weight: 20 kg
+Congratulations, all packages were delivered successfully by the couriers today.
 ===
-Olivia: 1
-Ian: 4
-Mia: 1 3 4
-Koko: Not found!
-Liam: 2 3
+Total weight: 16 kg
+Unfortunately, there are no more available couriers to deliver the following packages: 13
+===
+Total weight: 14 kg
+Unfortunately, there are no more available couriers to deliver the following packages: 3, 7

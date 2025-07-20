@@ -1,35 +1,8 @@
-Alice 1
-Bob 2
-Charlie 3
-Daryl 4
-Eva 1
-Fred 2
-Grace 3
-Fred 1
-Helen 4
-END
-Alice
-Daryl
-Stoyan
-Bob
-Fred
-END
+2 4 6 8
+8 6 4 2
 ===
-Ian 4
-Mia 1
-Judy 1
-Kyle 3
-Liam 2
-Mia 3
-Liam 3
-Mia 4
-Nolan 1
-Olivia 1
-Peter 4
-END
-Olivia
-Ian
-Mia
-Koko
-Liam
-END
+13 11 5
+5 11
+===
+3 7 14
+2 2 2 1 7
