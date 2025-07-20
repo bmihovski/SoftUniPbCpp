@@ -1,35 +1,15 @@
-Ani 1
-Spas 2
-23
-Teo 1
-Mia 2
-23
-Ivan 2
-99
-31
-99
-10
-20
-99
+2
+Pepi Ivan 3
+Mimi Ibrahim 2
+3
+===
+4
+Pepi Ivan 2
+Mimi Ibrahim 3
+Pepi Toni 1
+Pepi Minka 1
 5
 ===
-Spas 2
-Georgi 1
-23
-99
-Kunka 2
-Stanka 1
-99
-Chuck 2
-Norris 2
-23
-23
-99
-20
-10
-10
-99
-31
-31
-99
-5
+1
+Mimi Manol 2
+1

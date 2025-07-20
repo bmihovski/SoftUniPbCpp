@@ -1,25 +1,20 @@
-1: Ani Teo
-2: Ivan 
-3: Mia Spas
-1: Ani Teo Mia
-2: Ivan 
-3: Spas 
-1: Teo Mia
-2: <empty>
-3: Spas
+Pepi processing Ivan
+Mimi processing Ibrahim
+Pepi processing Ivan
+Mimi processing Ibrahim
+Pepi processing Ivan
+Mimi Idle
 ===
-1: Georgi 
-2: <empty>
-3: Spas
-1: Georgi Stanka
-2: Kunka
-3: Spas
-1: Georgi Stanka
-2: Norris
-3: Chuck Kunka Spas
-1: <empty>
-2: <empty>
-3: Chuck Kunka Spas
-1: Chuck Kunka
-2: <empty>
-3: Spas
+Pepi processing Ivan
+Mimi processing Ibrahim
+Pepi processing Ivan
+Mimi processing Ibrahim
+Pepi processing Toni
+Mimi processing Ibrahim
+Pepi processing Minka
+Mimi Idle
+Pepi Idle
+Mimi Idle
+===
+Pepi Idle
+Mimi processing Manol

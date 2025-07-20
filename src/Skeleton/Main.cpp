@@ -1,104 +1,63 @@
 #include <cctype>
 #include <iostream>
+#include <limits>
+#include <map>
 #include <queue>
 #include <sstream>
 #include <stack>
 #include <string>
 
-void PrintQueue(std::queue<std::string>& q) {
-  if (q.empty()) {
-    std::cout << "<empty>" << std::endl;
+void ProcessClient(const std::string& cashier_name,
+                   std::queue<std::map<std::string, int>>& client_queue) {
+  std::cout << cashier_name << " ";
+  if (client_queue.empty()) {
+    std::cout << "Idle" << std::endl;
     return;
   }
-  while (!q.empty()) {
-    std::cout << q.front() << " ";
-    q.pop();
+  auto& client_data = client_queue.front();
+  auto [name, minutes] = *client_data.begin();
+  std::cout << "processing " << name << std::endl;
+  minutes--;
+  if (minutes <= 0) {
+    client_queue.pop();
+  } else {
+    client_data[name] = minutes;
   }
-  std::cout << std::endl;
-}
-
-void PrintPeople(std::queue<std::string> queue1, std::queue<std::string> queue2,
-                 std::stack<std::string> chairs) {
-  std::cout << "1: ";
-  PrintQueue(queue1);
-  std::cout << "2: ";
-  PrintQueue(queue2);
-  std::cout << "3: ";
-  if (chairs.empty()) {
-    std::cout << "<empty>" << std::endl;
-    return;
-  }
-  while (!chairs.empty()) {
-    std::cout << chairs.top() << " ";
-    chairs.pop();
-  }
-  std::cout << std::endl;
 }
 
 int main() {
-  std::queue<std::string> queue1;
-  std::queue<std::string> queue2;
-  std::stack<std::string> chairs;
-
+  int commands_num = 0;
+  int work_minutes = 0;
   std::string line;
+  std::queue<std::map<std::string, int>> mimi_queue;
+  std::queue<std::map<std::string, int>> pepi_queue;
 
-  while (std::getline(std::cin, line) && line != "5") {
-    std::string name;
-    int number = 0;
+  std::cin >> commands_num;
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  while ((commands_num--) != 0) {
+    std::getline(std::cin, line);
     std::stringstream ss(line);
-    if (!std::isdigit(line[0])) {
-      ss >> name;
-      ss >> number;
-      if (number == 1) {
-        queue1.push(name);
+    std::string cashier;
+    std::string customer;
+    int minutes = 0;
+    ss >> cashier >> customer >> minutes;
 
-      } else {
-        queue2.push(name);
-      }
-    } else {
-      ss >> number;
-      const int command_source = number / 10;
-      const int command_dest = number % 10;
-      switch (command_dest) {
-        case 0:
-          if (command_source == 1) {
-            queue1.pop();
-          } else {
-            queue2.pop();
-          }
-          break;
-        case 1: {
-          if (chairs.empty()) {
-            break;
-          }
-          const auto& from_chairs = chairs.top();
-          chairs.pop();
-          queue1.push(from_chairs);
-          break;
-        }
-        case 2: {
-          if (queue1.empty()) {
-            break;
-          }
-          const auto& from_q1 = queue1.front();
-          queue1.pop();
-          queue2.push(from_q1);
-          break;
-        }
-        case 3: {
-          if (queue2.empty()) {
-            break;
-          }
-          const auto& from_q2 = queue2.front();
-          queue2.pop();
-          chairs.push(from_q2);
-          break;
-        }
-        default:
-          PrintPeople(queue1, queue2, chairs);
-      }
+    if (cashier == "Mimi") {
+      std::map<std::string, int> customer_map;
+      customer_map[customer] = minutes;
+      mimi_queue.push(customer_map);
+    } else if (cashier == "Pepi") {
+      std::map<std::string, int> customer_map;
+      customer_map[customer] = minutes;
+      pepi_queue.push(customer_map);
     }
   }
 
+  std::cin >> work_minutes;
+  while ((work_minutes--) != 0) {
+    ProcessClient("Pepi", pepi_queue);
+    ProcessClient("Mimi", mimi_queue);
+  }
   return 0;
 }
