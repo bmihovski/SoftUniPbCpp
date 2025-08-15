@@ -44,7 +44,7 @@ for ((i = 0; i < ${#INPUTS[@]}; i++)); do
     continue
   fi
 
-  ./out/Debug/PB <"${INPUTS[i]}" >tests/temp.out.txt
+  ./out/Debug/PB <"${INPUTS[i]}" >tests/temp.out.txt 2>&1
   if diff -bB -q tests/temp.out.txt "${OUTPUTS[i]}" >/dev/null; then
     echo "Test $test_num passed!"
   else
@@ -54,7 +54,12 @@ for ((i = 0; i < ${#INPUTS[@]}; i++)); do
     echo "Expected output:"
     cat "${OUTPUTS[i]}"
     echo "Actual output:"
-    cat tests/temp.out.txt
+    if [[ -s tests/temp.out.txt ]]; then
+     cat tests/temp.out.txt
+    else
+     echo "(No output - program may have crashed or produced no output)"
+    fi
+    echo ""
     echo "Output diff:"
     diff -bB tests/temp.out.txt "${OUTPUTS[i]}"
   fi

@@ -1,3 +1,5 @@
-1 2 3 4 5
-===
-1 2 3 4
+You are given a text in English. Let's define a word as any sequence of alphabetical characters. Each of those characters we'll call a letter, but we will consider the uppercase and lowercase variant of a character in a word as the same letter.
+a
+Y
+h
+.
