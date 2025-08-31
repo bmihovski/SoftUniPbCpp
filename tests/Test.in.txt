@@ -1,20 +1,11 @@
-Ivan
-BGN12
-500
-1
-2
-100
-3
-50
-1
-0
+асme 424242420
+softuni_foundation 20140414
+itjoro 878968302
+end
+id
 ===
-Maria
-BGN75
-0
-1
-2
--5
-3
-10
-0
+асme 424242420
+softuni_foundation 20140414
+itjoro 878968302
+end
+name
