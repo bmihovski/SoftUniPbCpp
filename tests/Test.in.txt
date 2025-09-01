@@ -1,11 +1,9 @@
-асme 424242420
-softuni_foundation 20140414
-itjoro 878968302
+uni (I.K.,S.N.)
+*begin
+*end
+*begin
+joro (G.G.)
+*begin
+*begin
 end
-id
 ===
-асme 424242420
-softuni_foundation 20140414
-itjoro 878968302
-end
-name
