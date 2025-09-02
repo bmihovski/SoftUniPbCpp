@@ -5,53 +5,97 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "BankAccount.h"
-void PrintMenu() {
-  printf("Would you like to do ?\n");
-  printf("Press 1 to Show All Information...\n");
-  printf("Press 2 to Add Balance...\n");
-  printf("Press 3 to Withdraw Balance...\n");
-  printf("Press 0 to Exit Program...\n");
-}
-int main() {
-  BankAccount* bank_account = BankAccount_Create();
-  while (1) {
-    PrintMenu();
-    int user_option = 0;
-    if (scanf(" %d", &user_option) != 1) {
-      return 1;
-    }
-    switch (user_option) {
-      case 1:
+#define MAX_PARTITION 100
 
-        Print(bank_account);
-        continue;
-      case 2:
-        printf("Enter Balance to Add:\n");
-        double amount = 0.0;
-        if (scanf(" %lf", &amount) != 1) {
-          printf("Invalid input for amount.\n");
-          continue;
-        }
-        AddBalance(bank_account, amount);
-        continue;
-      case 3:
-        printf("Enter Balance to Withdraw:\n");
-        double withdrawn_amount = 0.0;
-        if (scanf(" %lf", &withdrawn_amount) != 1) {
-          printf("Invalid amount to Withdraw.\n");
-          continue;
-        }
-        WithdrawBalance(bank_account, withdrawn_amount);
-        continue;
-      case 0:
-        Destroy(bank_account);
-        return 0;
-      default:
-        printf("Invalid option, please try again.\n");
-        break;
+typedef struct {
+  size_t count;
+  int from;
+  int to;
+} Range;
+
+Range* create_range(int from, int to, size_t count) {
+  Range* range = (Range*)malloc(sizeof(Range));
+  range->count = count;
+  range->from = from;
+  range->to = to;
+  return range;
+}
+
+void create_partition(Range** ranges, size_t* start, size_t* end,
+                      const int num) {
+  if (*start >= *end) {
+    return;
+  }
+  const size_t mid = *start + (*end - *start) / 2;
+  if (num >= ranges[mid]->from) {
+    *start = ranges[mid]->count;
+  } else {
+    *end = ranges[mid]->count;
+  }
+  return;
+}
+
+bool is_in_range(Range** ranges, size_t ranges_count, const int num_to_check) {
+  const Range* start_range = ranges[0];
+  const Range* end_range = ranges[ranges_count - 1];
+  size_t start_index = start_range->count;
+  size_t end_index = end_range->count;
+  if (num_to_check < start_range->from || num_to_check > end_range->to) {
+    return false;
+  }
+  while ((end_index - start_index) >= MAX_PARTITION) {
+    create_partition(ranges, &start_index, &end_index, num_to_check);
+  }
+  for (size_t start = start_index; start <= end_index; ++start) {
+    if (num_to_check >= ranges[start]->from &&
+        num_to_check <= ranges[start]->to) {
+      return true;
     }
   }
+
+  return false;
+}
+
+int main() {
+  int from = 0;
+  int to = 0;
+  Range** ranges = (Range**)malloc(sizeof(Range*) * 10000);
+  size_t ranges_count = 0;
+  while (1) {
+    if (scanf(" %d %d", &from, &to) != 2) {
+      break;
+    }
+    Range* range = create_range(from, to, ranges_count);
+    ranges[ranges_count++] = range;
+  }
+  int c = 0;
+  while ((c = getchar()) != EOF && c != '\n');
+  int num = 0;
+  while (1) {
+    // Peek at the next character
+    int peek_char = getchar();
+    if (peek_char == '.') {
+      break;  // Break if '.' is encountered
+    }
+
+    // Put the character back and read as number
+    ungetc(peek_char, stdin);
+    if (scanf(" %d", &num) != 1) {
+      break;
+    }
+
+    bool found = is_in_range(ranges, ranges_count, num);
+    if (found) {
+      printf("in\n");
+    } else {
+      printf("out\n");
+    }
+  }
+
+  for (size_t i = 0; i < ranges_count; i++) {
+    free(ranges[i]);
+  }
+  free(ranges);
 
   return 0;
 }
