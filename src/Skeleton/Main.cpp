@@ -1,40 +1,22 @@
-#include <exception>
 #include <iostream>
-#include <list>
-#include <sstream>
 #include <string>
 
-#include "RemoveDuplicates.h"
+#include "BattleField.h"
 
-int main() {
-  std::istream::sync_with_stdio(false);
-  std::ostream::sync_with_stdio(false);
-  std::list<Company*> companies;
-  std::string line;
-  Company* lastCompany = nullptr;
-  while (std::getline(std::cin, line) && line != "end") {
-    if (line[0] != '*') {
-      lastCompany = new Company();
-      std::istringstream(line) >> *lastCompany;
-      companies.push_back(lastCompany);
-    } else {
-      if (lastCompany == nullptr) {
-        throw std::exception();
-      }
-      if (line == "*begin") {
-        companies.insert(companies.begin(), lastCompany);
-      } else if (line == "*end") {
-        companies.insert(companies.end(), lastCompany);
-      } else {
-        throw std::exception();
-      }
-    }
-  }
-  removeDuplicates(companies);
-  for (Company* compPtr : companies) {
-    std::cout << *compPtr << std::endl;
-    delete compPtr;
-  }
+int main()
+{
+	std::string terranFleetComposition;
+	std::string protossFleetCompositon;
 
-  return 0;
+	std::cin >> terranFleetComposition >> protossFleetCompositon;
+
+	BattleField battleField;
+
+	battleField.generateTerranFleet(terranFleetComposition);
+	battleField.generateProtossFleet(protossFleetCompositon);
+
+	battleField.startBattle();
+
+	return 0;
 }
+

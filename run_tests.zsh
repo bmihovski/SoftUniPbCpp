@@ -51,9 +51,9 @@ for ((i = 0; i < ${#INPUTS[@]}; i++)); do
     echo "Test $test_num failed!"
     echo "Input was:"
     cat "${INPUTS[i]}"
-    echo "Expected output:"
+    echo "Expected output: !!!!!!!!"
     cat "${OUTPUTS[i]}"
-    echo "Actual output:"
+    echo "Actual output: #########"
     if [[ -s tests/temp.out.txt ]]; then
      cat tests/temp.out.txt
     else
