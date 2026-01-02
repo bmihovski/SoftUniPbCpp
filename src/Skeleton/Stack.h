@@ -6,7 +6,10 @@ Stack* create_stack();
 void destroy_stack(Stack* stack);
 bool is_empty(const Stack* stack);
 void push(Stack* stack, int data);
-int pop(Stack* stack);
-int peek(const Stack* stack);
+bool pop(Stack* stack, int* output);
+bool peek(const Stack* stack, int* output);
 size_t stack_size(const Stack* stack);
+Stack* copy_stack(Stack* source);
+int stack_try_lock(Stack* stack);
+void stack_unlock(Stack* stack);
 #endif  // SRC_SKELETON_STACK_H_

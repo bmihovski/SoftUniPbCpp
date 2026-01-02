@@ -6,7 +6,7 @@ typedef struct Queue Queue;
 Queue* create_queue();
 void destroy_queue(Queue* queue);
 bool add(Queue* queue, int value);
-bool remove_from_queue(Queue* queue);
-bool is_empty(const Queue* queue);
+int remove_from_queue(Queue* queue);
+bool is_queue_empty(const Queue* queue);
 size_t get_size(const Queue* queue);
 #endif  // SRC_SKELETON_QUEUE_H_
