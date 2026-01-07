@@ -58,20 +58,20 @@ size_t stack_size(const Stack* stack) {
 }
 bool is_empty(const Stack* stack) {
   if (!stack) {
-    return false;
+    return true;
   }
   pthread_mutex_lock((pthread_mutex_t*)&stack->mutex);
   bool result = (stack->size == 0);
   pthread_mutex_unlock((pthread_mutex_t*)&stack->mutex);
   return result;
 }
-void push(Stack* stack, int data) {
+bool push(Stack* stack, int data) {
   if (!stack) {
-    return;
+    return false;
   }
   Node* new_node = (Node*)malloc(sizeof(Node));
   if (!new_node) {
-    return;
+    return false;
   }
   new_node->data = data;
   pthread_mutex_lock(&stack->mutex);
@@ -79,6 +79,7 @@ void push(Stack* stack, int data) {
   stack->head = new_node;
   stack->size++;
   pthread_mutex_unlock(&stack->mutex);
+  return true;
 }
 bool pop(Stack* stack, int* output) {
   if (!stack) {

@@ -55,6 +55,9 @@ void destroy_queue(Queue* queue) {
 }
 
 bool add(Queue* queue, int value) {
+  if (!queue) {
+    return false;
+  }
   Node* new_node = malloc(sizeof(Node));
   if (!new_node) {
     fprintf(stderr, "Failed to allocate memory for new node\n");
@@ -76,16 +79,16 @@ bool add(Queue* queue, int value) {
   return true;
 }
 
-int remove_from_queue(Queue* queue) {
+bool remove_from_queue(Queue* queue, int* value) {
   if (!queue) {
     fprintf(stderr, "Cannot remove from an empty queue\n");
-    return INT_MIN;
+    return false;
   }
   QUEUE_LOCK(queue);
   if (get_size(queue) == 0) {
     fprintf(stderr, "We can't remove from the queue when empty\n");
     QUEUE_UNLOCK(queue);
-    return INT_MIN;
+    return false;
   }
   Node* temp = queue->head;
   int value_to_remove = temp->data;
@@ -100,9 +103,23 @@ int remove_from_queue(Queue* queue) {
   }
   free(temp);
   QUEUE_UNLOCK(queue);
-  return value_to_remove;
+  *value = value_to_remove;
+  return true;
 }
 
+int queue_try_lock(Queue* queue) {
+  if (!queue) {
+    return -1;
+  }
+  return pthread_mutex_lock(&queue->lock);
+}
+
+void queue_unlock(Queue* queue) {
+  if (!queue) {
+    return;
+  }
+  pthread_mutex_unlock(&queue->lock);
+}
 bool is_queue_empty(const Queue* queue) {
   if (!queue) {
     return true;

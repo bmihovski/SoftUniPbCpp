@@ -5,7 +5,7 @@ typedef struct Stack Stack;
 Stack* create_stack();
 void destroy_stack(Stack* stack);
 bool is_empty(const Stack* stack);
-void push(Stack* stack, int data);
+bool push(Stack* stack, int data);
 bool pop(Stack* stack, int* output);
 bool peek(const Stack* stack, int* output);
 size_t stack_size(const Stack* stack);

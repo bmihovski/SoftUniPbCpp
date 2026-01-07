@@ -10,9 +10,23 @@
 
 #include "Skeleton/Stack.h"
 
+static int setup_tests(void** state) {
+  Stack* stack = create_stack();
+  if (!stack) {
+    return -1;
+  }
+  *state = stack;
+  return 0;
+}
+
+static int teardown_tests(void** state) {
+  Stack* stack = (Stack*)*state;
+  destroy_stack(stack);
+  return 0;
+}
+
 static void test_stack_basic_operations(void** state) {
-  (void)state;
-  Stack* list = create_stack();
+  Stack* list = (Stack*)*state;
   assert_non_null(list);
   push(list, 5);
   push(list, 7);
@@ -36,23 +50,19 @@ static void test_stack_basic_operations(void** state) {
   assert_uint_equal(stack_size(list), 1);
   assert_true(pop(list, &result));
   assert_int_equal(result, 42);
-  destroy_stack(list);
 }
 
 static void test_stack_empty(void** state) {
-  (void)state;
-  Stack* s = create_stack();
+  Stack* s = (Stack*)*state;
   assert_non_null(s);
   assert_uint_equal(stack_size(s), 0);
   int dummy = 0;
   assert_false(pop(s, &dummy));
   assert_false(peek(s, &dummy));
-  destroy_stack(s);
 }
 
 static void test_multiple_insertion(void** state) {
-  (void)state; /* unused */
-  Stack* s = create_stack();
+  Stack* s = (Stack*)*state;
   for (int start = 0; start < 100; ++start) {
     push(s, start);
   }
@@ -62,7 +72,6 @@ static void test_multiple_insertion(void** state) {
     assert_true(pop(s, &got));
     assert_int_equal(got, expected);
   }
-  destroy_stack(s);
 }
 
 static void* try_lock_thread(void* arg) {
@@ -93,8 +102,7 @@ static void* thread_pop(void* arg) {
 }
 
 static void test_stack_mutex_unlock_after_push(void** state) {
-  (void)state;
-  Stack* s = create_stack();
+  Stack* s = (Stack*)*state;
   assert_non_null(s);
 
   /* Lock the mutex manually to simulate a long‑running operation */
@@ -115,13 +123,10 @@ static void test_stack_mutex_unlock_after_push(void** state) {
   assert_int_equal((intptr_t)thread_result, 0);
 
   assert_null(thread_pop(s));
-
-  destroy_stack(s);
 }
 
 static void test_stack_mutex_unlock_after_pop(void** state) {
-  (void)state;
-  Stack* s = create_stack();
+  Stack* s = (Stack*)*state;
   assert_non_null(s);
   assert_null(thread_push(s));
   stack_try_lock(s);
@@ -140,16 +145,66 @@ static void test_stack_mutex_unlock_after_pop(void** state) {
   int value = 0;
   assert_false(pop(s, &value));
   assert_int_equal(value, 0);
+  assert_true(is_empty(s));
+}
+
+static void test_when_queue_null_is_empty(void** state) {
+  Stack* q = (Stack*)*state;
+  assert_true(is_empty(NULL));
+  assert_uint_equal(stack_size(NULL), 0);
+  assert_false(pop(NULL, NULL));
+  assert_false(peek(NULL, NULL));
+  assert_false(push(NULL, 0));
+  assert_false(copy_stack(NULL));
+  assert_int_equal(stack_try_lock(NULL), -1);
+}
+
+static void test_destroy_stack_with_elements(void** state) {
+  Stack* s = (Stack*)*state;
+  assert_non_null(s);
+  for (int i = 0; i < 10; ++i) {
+    push(s, i);
+  }
   destroy_stack(s);
+  *state = NULL;
+}
+
+static void test_stack_unlock_allows_operations(void** state) {
+  Stack* s = (Stack*)*state;
+  stack_try_lock(s);
+  stack_unlock(s);
+  push(s, 5);
+  int value = 0;
+  assert_true(pop(s, &value));
+  assert_int_equal(value, 5);
+}
+
+static void test_stack_unlock_null_safe(void** state) {
+  (void)state;
+  stack_unlock(NULL);
+  assert_true(true);
 }
 
 int main(void) {
   const struct CMUnitTest tests[] = {
-      cmocka_unit_test(test_stack_basic_operations),
-      cmocka_unit_test(test_stack_empty),
-      cmocka_unit_test(test_multiple_insertion),
-      cmocka_unit_test(test_stack_mutex_unlock_after_push),
-      cmocka_unit_test(test_stack_mutex_unlock_after_pop),
+      cmocka_unit_test_setup_teardown(test_stack_basic_operations, setup_tests,
+                                      teardown_tests),
+      cmocka_unit_test_setup_teardown(test_stack_empty, setup_tests,
+                                      teardown_tests),
+      cmocka_unit_test_setup_teardown(test_multiple_insertion, setup_tests,
+                                      teardown_tests),
+      cmocka_unit_test_setup_teardown(test_stack_mutex_unlock_after_push,
+                                      setup_tests, teardown_tests),
+      cmocka_unit_test_setup_teardown(test_stack_mutex_unlock_after_pop,
+                                      setup_tests, teardown_tests),
+      cmocka_unit_test_setup_teardown(test_when_queue_null_is_empty,
+                                      setup_tests, teardown_tests),
+      cmocka_unit_test_setup_teardown(test_destroy_stack_with_elements,
+                                      setup_tests, teardown_tests),
+      cmocka_unit_test_setup_teardown(test_stack_unlock_null_safe, setup_tests,
+                                      teardown_tests),
+      cmocka_unit_test_setup_teardown(test_stack_unlock_allows_operations,
+                                      setup_tests, teardown_tests),
   };
   return cmocka_run_group_tests(tests, NULL, NULL);
 }
