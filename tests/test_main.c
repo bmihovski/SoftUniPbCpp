@@ -9,7 +9,7 @@
 #define TEST_INPUT_FILE "/tmp/test_input.txt"
 #define TEST_OUTPUT_FILE "/tmp/test_output.txt"
 
-int main_program(void);
+int mainPoint(void);
 
 static char* run_program_with_input(const char* input) {
   FILE* fin = fopen(TEST_INPUT_FILE, "w");
@@ -20,7 +20,7 @@ static char* run_program_with_input(const char* input) {
   stdin = fopen(TEST_INPUT_FILE, "r");
   stdout = fopen(TEST_OUTPUT_FILE, "w");
 
-  int ret = main_program();
+  int ret = mainPoint();
   (void)ret;
   fclose(stdin);
   fclose(stdout);
